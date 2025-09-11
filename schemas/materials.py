@@ -2,7 +2,8 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 import uuid
 
-from .base_schemas import FloatUnitRangeValue, StrUnitValue
+from base_schemas import FloatUnitRangeValue, StrUnitValue
+from enums import HStatementEnum, EUHStatementEnum, StateOfMatterEnum
 
 class UseCase(BaseModel):
     description: str
@@ -11,11 +12,13 @@ class MaterialBase(BaseModel):
     # basic info
     name: str
     short_description: str
+    other_names: Optional[List[str]] = Field([])
+
     cas: Optional[str] = Field(None, description="CAS number")
     
     # safety
-    h_statements = Optional[List[HStatementEnum]] = Field([])
-    euh_statements = Optional[List[EUHStatementEnum]] = Field([])
+    h_statements: Optional[List[HStatementEnum]] = Field([])
+    euh_statements: Optional[List[EUHStatementEnum]] = Field([])
 
     # economic
     use_cases: Optional[List[UseCase]] = Field([])
@@ -45,3 +48,19 @@ class Component(BaseModel):
 
 class Product(MaterialBase):
     components: Optional[List[Component]] = Field([])
+
+ethanol = Substance(
+    name="Ethanol",
+    short_description="Primary alcohol; 2 Carbon atoms; used in alcoholic beverages",
+    other_names=["Ethyl alcohol", "EtOH"],
+    cas="64-17-5",
+    h_statements=["H225", "H319"],
+    density=FloatUnitRangeValue(unit="GRAMM_PER_MILLILITRE", value=0.78)
+)
+
+print(ethanol.name)
+print(ethanol.short_description)
+print(f"{ethanol.density.value} {ethanol.density.unit.display}")
+
+for i in ethanol.h_statements:
+    print(i.display)

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
 
-from .enums import UnitEnum
+from enums import UnitEnum
 
 # UNITS
 

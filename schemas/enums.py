@@ -1,9 +1,10 @@
-from .base_enums import RichEnum
+from base_enums import RichEnum
 
 class UnitEnum(RichEnum):
     NEWTON = ("NEWTON", "N")
     KILOGRAM = ("KILOGRAM", "kg")
     METER_PER_SECOND = ("METER_PER_SECOND ", "m/s")
+    GRAMM_PER_MILLILITRE = ("GRAMM_PER_MILLILITRE", "g/ml")
 
 class ChemicalClassEnum(RichEnum):
     pass
